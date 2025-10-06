@@ -1,11 +1,13 @@
-#include <uos/hal/m33/_base.h>
+#include <uos/base.h>
+#include <uos/hal/clock.h>
+#include <uos/bsp.h>
 
 uint8_t critical_nesting = 0;
 
 void delay_us(uint32_t microseconds)
 {
 	// Calculate the number of loop iterations
-	uint32_t iters = (microseconds * (get_sysclk_freq() / 1'000'000)) >> 1;
+	uint32_t iters = (microseconds * (bsp_get_sysclk_freq() / 1'000'000)) >> 1;
 	
 	__asm volatile(
 		"loop:" 
@@ -36,8 +38,8 @@ void exit_critical(void)
 	}
 	
 	__asm volatile(
+		"cpsie i\n"
 		"dsb\n"
-		"isb\n"
-		"cpsie i"
+		"isb"
 	);
 }

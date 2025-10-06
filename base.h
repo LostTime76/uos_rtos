@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <arm_acle.h>
 
 /*!
  * @brief Enters a critical section of code
@@ -19,7 +20,7 @@ void exit_critical(void);
  *       Implementations will generally use a tight loop based on the system clock frequency. Thus
  *       the delay is highly inaccurate and the function should be used sparingly.
  *
- * @param nanoseconds
- *        The approximate delay in nanoseconds
+ * @param microseconds
+ *        The approximate delay in microseconds
  */
 void delay_us(uint32_t microseconds);
